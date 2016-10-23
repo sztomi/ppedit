@@ -1,8 +1,5 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
-from subprocess import run, PIPE
-from os import remove
-from io import StringIO
 
 from ppedit.tools.bases import TextProcessor
 
