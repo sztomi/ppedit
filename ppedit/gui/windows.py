@@ -1,19 +1,29 @@
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QSplitter
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
-from qutepart import Qutepart
+
+from .widgets import PPSketchPreview, Editor
 
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         loadUi('res/mainwindow.ui', self)
-        self.statusBar()
-        self.editor = Qutepart(self)
-        self.setCentralWidget(self.editor)
+        splitter = QSplitter(self)
+        self.editor = Editor(self)
+        self.sketcher = PPSketchPreview(self)
+        splitter.addWidget(self.editor)
+        splitter.addWidget(self.sketcher)
+        self.sketcher.editor = self.editor
+        self.editor.qpart.textChanged.connect(self.sketcher.update_preview)
+        self.setCentralWidget(splitter)
 
     @pyqtSlot()
     def on_actionOpen_triggered(self):
-        QMessageBox.information(self, 'triggered!', 'actionOpen')
-
-
+        filename, _ = QFileDialog.getOpenFileName(self, caption='Open a C++ header/source',
+                                                  filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
+                                                         '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
+        self.sketcher.target_file = filename
+        with open(filename) as f:
+            self.editor.qpart.text = f.read()
+            self.editor.qpart.detectSyntax(language='C++')
