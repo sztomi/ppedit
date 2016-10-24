@@ -11,7 +11,7 @@ class Preprocessor(object, metaclass=ABCMeta):
 
 
 class ClangPreprocessor(Preprocessor):
-    marker = 'PPEDIT_MARK_scratch'
+    marker = 'PPEDIT_MARK_SCRATCH'
 
     def get_preprocessed_contents(self, filename: str, input_text: str, scratch: str, flags: List[str]) -> str:
         text = '{input}\n{marker}\n{scratch}'.format(input=input_text, marker=self.marker, scratch=scratch)

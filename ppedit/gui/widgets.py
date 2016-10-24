@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QSplitter, QVBoxLayout, QLineEdit
 from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.uic import loadUi
 from qutepart import Qutepart
 
 from ppedit.preprocessor import ClangPreprocessor
@@ -12,15 +13,23 @@ class PPscratchPreview(QWidget):
         super().__init__(parent)
         self.pp = ClangPreprocessor()
         self._flags = []
+
         splitter = QSplitter(self)
         splitter.setOrientation(Qt.Vertical)
-        self.scratch = Qutepart(self)
+        scratch_holder = QWidget(self)
+        loadUi('res/scratch.ui', scratch_holder)
+        self.scratch = scratch_holder.editor
         self.scratch.detectSyntax(language='C++')
         self.scratch.textChanged.connect(self.update_preview)
-        self.preview = Qutepart(self)
+
+        preview_holder = QWidget(self)
+        loadUi('res/preview.ui', preview_holder)
+        self.preview = preview_holder.editor
         self.preview.detectSyntax(language='C++')
-        splitter.addWidget(self.scratch)
-        splitter.addWidget(self.preview)
+
+        splitter.addWidget(scratch_holder)
+        splitter.addWidget(preview_holder)
+
         layout = QVBoxLayout()
         layout.setContentsMargins(2, 2, 2, 2)
         layout.addWidget(splitter)
