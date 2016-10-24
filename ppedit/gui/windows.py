@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QSplitter
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
-from .widgets import PPSketchPreview, Editor
+from .widgets import PPscratchPreview, Editor
 
 
 class MainWindow(QMainWindow):
@@ -11,11 +11,11 @@ class MainWindow(QMainWindow):
         loadUi('res/mainwindow.ui', self)
         splitter = QSplitter(self)
         self.editor = Editor(self)
-        self.sketcher = PPSketchPreview(self)
+        self.scratcher = PPscratchPreview(self)
         splitter.addWidget(self.editor)
-        splitter.addWidget(self.sketcher)
-        self.sketcher.editor = self.editor
-        self.editor.qpart.textChanged.connect(self.sketcher.update_preview)
+        splitter.addWidget(self.scratcher)
+        self.scratcher.editor = self.editor
+        self.editor.qpart.textChanged.connect(self.scratcher.update_preview)
         self.setCentralWidget(splitter)
 
     @pyqtSlot()
@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         filename, _ = QFileDialog.getOpenFileName(self, caption='Open a C++ header/source',
                                                   filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
                                                          '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
-        self.sketcher.target_file = filename
+        self.scratcher.target_file = filename
         with open(filename) as f:
             self.editor.qpart.text = f.read()
             self.editor.qpart.detectSyntax(language='C++')

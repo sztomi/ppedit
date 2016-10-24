@@ -7,19 +7,19 @@ from ppedit.preprocessor import ClangPreprocessor
 from typing import List
 
 
-class PPSketchPreview(QWidget):
+class PPscratchPreview(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.pp = ClangPreprocessor()
         self._flags = []
         splitter = QSplitter(self)
         splitter.setOrientation(Qt.Vertical)
-        self.sketch = Qutepart(self)
-        self.sketch.detectSyntax(language='C++')
-        self.sketch.textChanged.connect(self.update_preview)
+        self.scratch = Qutepart(self)
+        self.scratch.detectSyntax(language='C++')
+        self.scratch.textChanged.connect(self.update_preview)
         self.preview = Qutepart(self)
         self.preview.detectSyntax(language='C++')
-        splitter.addWidget(self.sketch)
+        splitter.addWidget(self.scratch)
         splitter.addWidget(self.preview)
         layout = QVBoxLayout()
         layout.setContentsMargins(2, 2, 2, 2)
@@ -37,7 +37,7 @@ class PPSketchPreview(QWidget):
 
     @pyqtSlot()
     def update_preview(self):
-        preprocessed = self.pp.get_preprocessed_contents(self.target_file, self.editor.qpart.text, self.sketch.text,
+        preprocessed = self.pp.get_preprocessed_contents(self.target_file, self.editor.qpart.text, self.scratch.text,
                                                          self._flags)
         self.preview.text = preprocessed
 
@@ -46,6 +46,7 @@ class Editor(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.qpart = Qutepart(self)
+        self.qpart.drawIndentations = False
         self.params_edit = QLineEdit(self)
         layout = QVBoxLayout()
         layout.setContentsMargins(2, 2, 2, 2)
