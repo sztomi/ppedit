@@ -24,6 +24,13 @@ class MainWindow(QMainWindow):
                                                   filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
                                                          '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
         self.scratcher.target_file = filename
-        with open(filename) as f:
-            self.editor.qpart.text = f.read()
-            self.editor.qpart.detectSyntax(language='C++')
+        try:
+            with open(filename) as f:
+                self.editor.qpart.text = f.read()
+                self.editor.qpart.detectSyntax(language='C++')
+        except FileNotFoundError:
+            pass
+
+    @pyqtSlot()
+    def on_actionQuit_triggered(self):
+        self.close()

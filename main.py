@@ -6,7 +6,7 @@ from resources import qInitResources, qCleanupResources
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    QApplication.setStyle(QStyleFactory.create("gtk"))
+    QApplication.setStyle(QStyleFactory.create("gtk2"))
     qInitResources()
     w = MainWindow()
     w.show()
