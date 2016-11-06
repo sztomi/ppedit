@@ -20,9 +20,11 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_actionOpen_triggered(self):
-        filename, _ = QFileDialog.getOpenFileName(self, caption='Open a C++ header/source',
-                                                  filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
-                                                         '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
+        filename, _ = QFileDialog.getOpenFileName(
+            self,
+            caption='Open a C++ header/source',
+            filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
+            '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
         self.scratcher.target_file = filename
         try:
             with open(filename) as f:
@@ -34,3 +36,8 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_actionQuit_triggered(self):
         self.close()
+
+    @pyqtSlot()
+    def on_actionSave_triggered(self):
+        with open(self.scratcher.target_file, 'w') as f:
+            f.write(self.editor.qpart.text)

@@ -46,8 +46,9 @@ class PPscratchPreview(QWidget):
 
     @pyqtSlot()
     def update_preview(self):
-        preprocessed = self.pp.get_preprocessed_contents(self.target_file, self.editor.qpart.text, self.scratch.text,
-                                                         self._flags)
+        preprocessed = self.pp.get_preprocessed_contents(
+            self.target_file, self.editor.qpart.text, self.scratch.text,
+            self._flags)
         self.preview.text = preprocessed
 
 

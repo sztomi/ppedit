@@ -3,7 +3,7 @@
 
    Try this in the scratch window:
 
-       DEFINE_ENUM_WITH_STRING_CONVERSIONS(Color, (Red)(Green)(Blue)(Purple))
+       SMARTENUM(Color, (Red)(Green)(Blue)(Purple))
 
    Add/remove items to the enum to see the change in the output.
 */
