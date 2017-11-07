@@ -19,11 +19,11 @@ class ClangPreprocessor(Preprocessor):
     text = '{input}\n{marker}\n{scratch}'.format(
         input=input_text, marker=self.marker, scratch=scratch)
     pp = TextProcessor('clang++')
-    assembled_flags = '-E {flags} -x c++ -D{marker}={marker}'.format(
+    assembled_flags = '-E {flags} -x c++ -D{marker}={marker} -'.format(
         flags=' '.join(flags), marker=self.marker)
-    assembled_flags += ' {input_file}'
+    #assembled_flags += ' {input_file}'
     processed = pp.process_text(text, assembled_flags)
     clang_format = TextProcessor('clang-format')
-    lines = clang_format.process_text(processed, '{input_file}')
+    lines = clang_format.process_text(processed)
     marker_idx = lines.find(self.marker)
     return ''.join(lines[marker_idx + len(self.marker) + 1:])

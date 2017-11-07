@@ -1,11 +1,13 @@
+from typing import List
+
 from PyQt5.QtWidgets import QWidget, QSplitter, QVBoxLayout, QLineEdit
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.uic import loadUi
+
 from qutepart import Qutepart
 
 from ppedit.preprocessor import ClangPreprocessor
 
-from typing import List
 
 
 class PPscratchPreview(QWidget):
