@@ -24,6 +24,6 @@ class TextProcessor(object):
     :return: The processed text as string.
     """
     with io.BytesIO(text.encode("utf-8")) as f:
-      flags = flags_fmt.split(' ') if flags_fmt else []
+      flags = flags_fmt.split(" ") if flags_fmt else []
       proc = run([self.executable, *flags], stdout=PIPE, input=f.read())
-      return proc.stdout.decode('utf-8')
+      return proc.stdout.decode("utf-8")

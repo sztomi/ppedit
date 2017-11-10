@@ -19,15 +19,15 @@ class PPscratchPreview(QWidget):
     splitter = QSplitter(self)
     splitter.setOrientation(Qt.Vertical)
     scratch_holder = QWidget(self)
-    loadUi('res/scratch.ui', scratch_holder)
+    loadUi("res/scratch.ui", scratch_holder)
     self.scratch = scratch_holder.editor
-    self.scratch.detectSyntax(language='C++')
+    self.scratch.detectSyntax(language="C++")
     self.scratch.textChanged.connect(self.update_preview)
 
     preview_holder = QWidget(self)
-    loadUi('res/preview.ui', preview_holder)
+    loadUi("res/preview.ui", preview_holder)
     self.preview = preview_holder.editor
-    self.preview.detectSyntax(language='C++')
+    self.preview.detectSyntax(language="C++")
 
     splitter.addWidget(scratch_holder)
     splitter.addWidget(preview_holder)

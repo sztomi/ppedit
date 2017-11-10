@@ -8,7 +8,7 @@ from .widgets import PPscratchPreview, Editor
 class MainWindow(QMainWindow):
   def __init__(self, parent=None):
     super().__init__(parent)
-    loadUi('res/mainwindow.ui', self)
+    loadUi("res/mainwindow.ui", self)
     splitter = QSplitter(self)
     self.editor = Editor(self)
     self.scratcher = PPscratchPreview(self)
@@ -22,14 +22,14 @@ class MainWindow(QMainWindow):
   def on_actionOpen_triggered(self):
     filename, _ = QFileDialog.getOpenFileName(
         self,
-        caption='Open a C++ header/source',
-        filter='C++ header/source (*.h *.hpp *.hh *hxx ' +
-        '*.i *.ipp *.ixx *.cpp *.cc *.cxx)')
+        caption="Open a C++ header/source",
+        filter="C++ header/source (*.h *.hpp *.hh *hxx " +
+        "*.i *.ipp *.ixx *.cpp *.cc *.cxx)")
     self.scratcher.target_file = filename
     try:
       with open(filename) as f:
         self.editor.qpart.text = f.read()
-        self.editor.qpart.detectSyntax(language='C++')
+        self.editor.qpart.detectSyntax(language="C++")
     except FileNotFoundError:
       pass
 
@@ -39,5 +39,5 @@ class MainWindow(QMainWindow):
 
   @pyqtSlot()
   def on_actionSave_triggered(self):
-    with open(self.scratcher.target_file, 'w') as f:
+    with open(self.scratcher.target_file, "w") as f:
       f.write(self.editor.qpart.text)
